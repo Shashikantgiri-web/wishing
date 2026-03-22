@@ -34,7 +34,7 @@ export default function Home() {
       <p>Username: {username}</p>
       <p>First Name: {firstName}</p>
       <p>Last Name: {lastName}</p>
-      {birthday && <p>Birthday: {birthday}</p>}
+      <p>Birthday: {birthday ? birthday.toDateString() : 'N/A'}</p>
     </div>
     </>
   );

@@ -1,3 +1,4 @@
+"use client";
 import { Show, SignInButton, SignUpButton, UserButton } from '@clerk/nextjs';
 import { useUser } from '@clerk/nextjs';
 

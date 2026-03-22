@@ -73,7 +73,7 @@ const Explore = () => {
       <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
         <div>
           <h2 className="text-4xl font-black text-white mb-2">Explore Celebrations</h2>
-          <p className="text-slate-400">Join the party and send your best wishes to today's stars.</p>
+          <p className="text-slate-400">Join the party and send your best wishes to today&apos;s stars.</p>
         </div>
       </div>
 

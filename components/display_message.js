@@ -14,7 +14,7 @@ const DisplayMessage = () => {
         {messages.map((m, i) => (
           <div key={i} className="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm hover:bg-white/10 transition-all group">
             <span className="text-purple-400 font-bold block mb-2">{m.from}</span>
-            <p className="text-slate-300 leading-relaxed italic">"{m.text}"</p>
+            <p className="text-slate-300 leading-relaxed italic">{m.text}</p>
           </div>
         ))}
       </div>

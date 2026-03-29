@@ -6,10 +6,14 @@ export const dynamic = "force-dynamic"
 export async function POST(request) {
   try {
     const body = await request.json()
-    const { fromEmail, fromName, toEmail, message } = body
+    const { fromEmail, fromName, toEmail, message, sender, receiver } = body
 
-    if (!fromEmail || !toEmail || !message) {
-      return Response.json({ success: false, message: "Missing required fields" }, { status: 400 })
+    const finalSender = sender || fromEmail
+    const finalReceiver = receiver || toEmail
+    const finalMessage = message
+
+    if (!finalSender || !finalReceiver || !finalMessage) {
+      return Response.json({ success: false, message: "Missing required fields (sender/receiver/message)" }, { status: 400 })
     }
 
     const client = await clientPromise
@@ -17,10 +21,10 @@ export async function POST(request) {
     const collection = db.collection("messages")
 
     await collection.insertOne({
-      fromEmail,
-      fromName: fromName || "Anonymous",
-      toEmail,
-      text: message,
+      fromEmail: finalSender,
+      fromName: fromName || "Anonymous Friend",
+      toEmail: finalReceiver,
+      text: finalMessage,
       createdAt: new Date()
     })
 

@@ -17,7 +17,9 @@ const Explore = () => {
         const res = await fetch('/api/users')
         const data = await res.json()
         if (data.success) {
-          setCelebrants(data.users)
+          const today = new Date().toISOString().slice(5, 10);
+          const filteredUsers = data.users.filter(u => u.dob?.slice(5, 10) === today);
+          setCelebrants(filteredUsers);
         }
       } catch (err) {
         console.error("Failed to fetch users:", err)
@@ -38,9 +40,9 @@ const Explore = () => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          fromEmail: user?.emailAddresses[0]?.emailAddress || "anonymous@example.com",
+          sender: user?.emailAddresses[0]?.emailAddress || "anonymous@example.com",
           fromName: user?.firstName ? `${user.firstName} ${user.lastName}` : "Anonymous Friend",
-          toEmail: selectedUser.email,
+          receiver: selectedUser.email,
           message: wishMessage
         })
       })
@@ -77,17 +79,29 @@ const Explore = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {celebrants.length > 0 ? (
-          celebrants.map((u) => (
+      {celebrants.length > 0 ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {celebrants.map((u) => (
             <Message key={u.email} data={u} onSendWish={setSelectedUser} />
-          ))
-        ) : (
-          <div className="col-span-full text-center py-12 bg-white/5 border border-white/10 rounded-3xl">
-            <p className="text-slate-400">No one is celebrating today. Be the first!</p>
+          ))}
+        </div>
+      ) : (
+        <div className="w-full flex flex-col items-center justify-center py-24 bg-gradient-to-b from-white/5 to-transparent border border-white/10 rounded-[3rem] text-center px-6">
+          <div className="w-20 h-20 bg-slate-900 rounded-full flex items-center justify-center mb-6 border border-white/5 text-4xl shadow-2xl">
+            ✨
           </div>
-        )}
-      </div>
+          <h3 className="text-2xl font-bold text-white mb-3">No celebrations today yet!</h3>
+          <p className="text-slate-400 max-w-md mb-8">
+            The party hasn&apos;t started yet. Be the first to share your special day or wait for the stars to align.
+          </p>
+          <a 
+            href="/" 
+            className="px-8 py-3 rounded-full bg-white text-slate-950 font-bold hover:bg-slate-200 transition-all hover:scale-105 active:scale-95"
+          >
+            Setup My Birthday 🎂
+          </a>
+        </div>
+      )}
 
       {/* Message Modal */}
       {selectedUser && (

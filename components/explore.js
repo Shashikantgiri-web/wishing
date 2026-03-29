@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import { useUser } from '@clerk/nextjs'
 import Message from './message'
+import Link from 'next/link'
 
 const Explore = () => {
   const { user } = useUser()
@@ -94,12 +95,12 @@ const Explore = () => {
           <p className="text-slate-400 max-w-md mb-8">
             The party hasn&apos;t started yet. Be the first to share your special day or wait for the stars to align.
           </p>
-          <a 
+          <Link 
             href="/" 
             className="px-8 py-3 rounded-full bg-white text-slate-950 font-bold hover:bg-slate-200 transition-all hover:scale-105 active:scale-95"
           >
             Setup My Birthday 🎂
-          </a>
+          </Link>
         </div>
       )}
 

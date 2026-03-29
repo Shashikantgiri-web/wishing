@@ -1,14 +1,20 @@
-import React from 'react'
-
 const Message = ({ data, onSendWish }) => {
+  const [message, setMessage] = React.useState("")
+
+  const handleSend = () => {
+    if (!message.trim()) return
+    onSendWish(data, message) // Pass both data and message
+    setMessage("")
+  }
+
   return (
     <div className="p-8 rounded-[2rem] bg-white/5 border border-white/10 hover:border-purple-500/40 transition-all hover:translate-y-[-6px] group relative overflow-hidden shadow-2xl shadow-purple-500/5">
       {/* Decorative accent */}
       <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-purple-600/10 to-transparent blur-3xl group-hover:from-purple-600/20 transition-all"></div>
       
       <div className="flex items-center gap-5 mb-6 relative z-10">
-        <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-purple-500 to-pink-500 flex items-center justify-center font-bold text-white shadow-xl rotate-3 group-hover:rotate-0 transition-all">
-          <span className="text-xl">{data?.firstname?.[0] || data?.name?.[0] || "U"}</span>
+        <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-purple-500 to-pink-500 flex items-center justify-center font-bold text-white shadow-xl rotate-3 group-hover:rotate-0 transition-all text-xl">
+          {data?.firstname?.[0] || data?.name?.[0] || "U"}
         </div>
         <div>
           <h4 className="text-lg font-black text-white group-hover:text-purple-400 transition-colors">
@@ -24,6 +30,26 @@ const Message = ({ data, onSendWish }) => {
       <p className="text-slate-300 leading-relaxed font-medium mb-8 relative z-10 line-clamp-3 italic">
         {data?.msg || "Sending love and best wishes on this special day! Hope your year is as bright as your smile."}
       </p>
+
+      {/* Inline Message Input */}
+      {onSendWish && (
+          <div className="mb-8 relative z-10 space-y-4">
+              <input 
+                type="text"
+                placeholder={`Wish ${data?.firstname || 'them'}...`} 
+                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:ring-1 focus:ring-purple-500 transition-all placeholder:text-slate-600"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+              />
+              <button 
+                onClick={handleSend}
+                disabled={!message.trim()}
+                className="w-full py-3 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 text-white text-[10px] font-black uppercase tracking-widest hover:scale-[1.02] active:scale-[0.98] transition-all shadow-lg shadow-purple-500/10 disabled:opacity-30 disabled:grayscale"
+              >
+                Send Birthday Wish ✨
+              </button>
+          </div>
+      )}
       
       <div className="flex items-center justify-between gap-4 text-slate-500 relative z-10 border-t border-white/5 pt-6">
         <div className="flex items-center gap-4">
@@ -37,14 +63,9 @@ const Message = ({ data, onSendWish }) => {
           </button>
         </div>
         
-        {onSendWish && (
-          <button 
-            onClick={() => onSendWish(data)}
-            className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white text-xs font-black transition-all shadow-lg shadow-purple-500/20 active:scale-95"
-          >
-            Send Wish ✨
-          </button>
-        )}
+        <div className="text-[10px] font-black uppercase tracking-widest text-slate-600">
+            Celebration
+        </div>
       </div>
     </div>
   )

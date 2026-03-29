@@ -3,13 +3,15 @@ import React, { useState, useEffect } from 'react'
 import { useUser } from '@clerk/nextjs'
 import Message from './message'
 import Link from 'next/link'
+import UpcomingBirthdays from './upcoming_birthdays'
+import AiGenerator from './ai_generator'
+import ShareOptions from './share_options'
 
 const Explore = () => {
   const { user } = useUser()
   const [celebrants, setCelebrants] = useState([])
+  const [upcomingCelebrants, setUpcomingCelebrants] = useState([])
   const [loading, setLoading] = useState(true)
-  const [selectedUser, setSelectedUser] = useState(null)
-  const [wishMessage, setWishMessage] = useState("")
   const [sending, setSending] = useState(false)
 
   useEffect(() => {
@@ -18,9 +20,37 @@ const Explore = () => {
         const res = await fetch('/api/users')
         const data = await res.json()
         if (data.success) {
-          const today = new Date().toISOString().slice(5, 10);
-          const filteredUsers = data.users.filter(u => u.dob?.slice(5, 10) === today);
-          setCelebrants(filteredUsers);
+          const now = new Date();
+          const todayStr = now.toISOString().slice(5, 10); // MM-DD
+          
+          // Today's Birthdays
+          const todayBirthdays = data.users.filter(u => u.dob?.slice(5, 10) === todayStr);
+          setCelebrants(todayBirthdays);
+
+          // Upcoming Birthdays (next 3-5)
+          // Sort remaining users by MM-DD
+          const others = data.users.filter(u => u.dob?.slice(5, 10) !== todayStr);
+          const sortedOthers = others.sort((a, b) => {
+             const dA = a.dob?.slice(5, 10) || "";
+             const dB = b.dob?.slice(5, 10) || "";
+             return dA.localeCompare(dB);
+          });
+
+          // Find first index where date > todayStr
+          const nextIndex = sortedOthers.findIndex(u => (u.dob?.slice(5, 10) || "") > todayStr);
+          
+          let upcoming;
+          if (nextIndex === -1) {
+            // All birthdays happened earlier this year, so next ones are at start of next year
+            upcoming = sortedOthers.slice(0, 4);
+          } else {
+            upcoming = sortedOthers.slice(nextIndex, nextIndex + 4);
+            // If we have fewer than 4, wrap around to start of year
+            if (upcoming.length < 4) {
+               upcoming = [...upcoming, ...sortedOthers.slice(0, 4 - upcoming.length)];
+            }
+          }
+          setUpcomingCelebrants(upcoming);
         }
       } catch (err) {
         console.error("Failed to fetch users:", err)
@@ -31,9 +61,8 @@ const Explore = () => {
     fetchUsers()
   }, [])
 
-  const handleSendWish = async (e) => {
-    e.preventDefault()
-    if (!wishMessage.trim()) return
+  const handleSendWish = async (targetUser, message) => {
+    if (!message.trim()) return
 
     setSending(true)
     try {
@@ -43,15 +72,13 @@ const Explore = () => {
         body: JSON.stringify({
           sender: user?.emailAddresses[0]?.emailAddress || "anonymous@example.com",
           fromName: user?.firstName ? `${user.firstName} ${user.lastName}` : "Anonymous Friend",
-          receiver: selectedUser.email,
-          message: wishMessage
+          receiver: targetUser.email,
+          message: message
         })
       })
       const data = await res.json()
       if (data.success) {
-        alert(`Wish sent to ${selectedUser.firstname}!`)
-        setSelectedUser(null)
-        setWishMessage("")
+        alert(`Wish sent to ${targetUser.firstname}! ✨`)
       } else {
         alert("Failed to send wish.")
       }
@@ -72,69 +99,53 @@ const Explore = () => {
   }
 
   return (
-    <div className="w-full max-w-5xl mx-auto py-24 px-6">
-      <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
+    <div className="w-full max-w-6xl mx-auto py-24 px-6">
+      <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-4">
         <div>
-          <h2 className="text-4xl font-black text-white mb-2">Explore Celebrations</h2>
-          <p className="text-slate-400">Join the party and send your best wishes to today&apos;s stars.</p>
+          <h2 className="text-5xl font-black text-white mb-4 tracking-tight">
+             {celebrants.length > 0 ? "Today's Stars" : "Explore Celebrations"}
+          </h2>
+          <p className="text-slate-400 text-lg">
+             {celebrants.length > 0 
+               ? "Someone special is celebrating today. Send them a wish!" 
+               : "Join the party and keep the celebration spirit alive."}
+          </p>
         </div>
       </div>
 
       {celebrants.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {celebrants.map((u) => (
-            <Message key={u.email} data={u} onSendWish={setSelectedUser} />
+            <Message key={u.email} data={u} onSendWish={handleSendWish} />
           ))}
         </div>
       ) : (
-        <div className="w-full flex flex-col items-center justify-center py-24 bg-gradient-to-b from-white/5 to-transparent border border-white/10 rounded-[3rem] text-center px-6">
-          <div className="w-20 h-20 bg-slate-900 rounded-full flex items-center justify-center mb-6 border border-white/5 text-4xl shadow-2xl">
-            ✨
-          </div>
-          <h3 className="text-2xl font-bold text-white mb-3">No celebrations today yet!</h3>
-          <p className="text-slate-400 max-w-md mb-8">
-            The party hasn&apos;t started yet. Be the first to share your special day or wait for the stars to align.
-          </p>
-          <Link 
-            href="/" 
-            className="px-8 py-3 rounded-full bg-white text-slate-950 font-bold hover:bg-slate-200 transition-all hover:scale-105 active:scale-95"
-          >
-            Setup My Birthday 🎂
-          </Link>
-        </div>
-      )}
+        <div className="space-y-12 animate-in fade-in duration-1000">
+             {/* New Modular Empty State Layout */}
+             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <UpcomingBirthdays users={upcomingCelebrants} />
+                <AiGenerator />
+                <ShareOptions />
+             </div>
 
-      {/* Message Modal */}
-      {selectedUser && (
-        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-md flex items-center justify-center z-50 p-4">
-          <div className="bg-slate-900 border border-white/10 rounded-2xl p-8 max-w-md w-full shadow-2xl">
-            <h3 className="text-2xl font-bold text-white mb-4">Send a Wish to {selectedUser.firstname}</h3>
-            <form onSubmit={handleSendWish} className="space-y-6">
-              <textarea
-                className="w-full h-32 bg-white/5 border border-white/10 rounded-xl p-4 text-white focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all resize-none"
-                placeholder="Write your birthday wish here..."
-                value={wishMessage}
-                onChange={(e) => setWishMessage(e.target.value)}
-                required
-              />
-              <div className="flex gap-4">
-                <button
-                  type="button"
-                  onClick={() => setSelectedUser(null)}
-                  className="flex-1 px-6 py-3 rounded-xl border border-white/10 text-slate-400 hover:bg-white/5 transition-all"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  disabled={sending}
-                  className="flex-1 px-6 py-3 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold hover:from-purple-700 hover:to-pink-700 transition-all disabled:opacity-50"
-                >
-                  {sending ? "Sending..." : "Send Wish ✨"}
-                </button>
-              </div>
-            </form>
-          </div>
+             <div className="w-full py-16 bg-white/5 border border-white/10 rounded-[3rem] text-center px-6 relative overflow-hidden group">
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-600/5 to-pink-600/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                <div className="relative z-10">
+                    <div className="w-16 h-16 bg-slate-900 rounded-2xl flex items-center justify-center mx-auto mb-6 border border-white/5 text-3xl shadow-2xl group-hover:scale-110 transition-transform">
+                        🎂
+                    </div>
+                    <h3 className="text-2xl font-bold text-white mb-3">Want your own birthday celebration page?</h3>
+                    <p className="text-slate-400 max-w-md mx-auto mb-8">
+                        Setup your birthday details and let your friends surprise you with amazing 3D avatars and heartfelt wishes.
+                    </p>
+                    <Link 
+                        href="/" 
+                        className="inline-block px-10 py-4 rounded-full bg-white text-slate-950 font-black hover:bg-slate-200 transition-all hover:scale-105 active:scale-95 shadow-xl shadow-white/5"
+                    >
+                        Setup My Birthday Page
+                    </Link>
+                </div>
+             </div>
         </div>
       )}
     </div>

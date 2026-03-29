@@ -1,3 +1,5 @@
+import React from 'react'
+
 const Message = ({ data, onSendWish }) => {
   const [message, setMessage] = React.useState("")
 

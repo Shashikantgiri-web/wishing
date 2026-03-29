@@ -27,8 +27,29 @@ export default function Home() {
       setEmail(user.emailAddresses[0]?.emailAddress || "");
       setUsername(user.username || "");
       setProfilePicture(user.imageUrl || "");
+
+      // Auto Redirect Logic from README.md
+      const checkUserPersistence = async () => {
+        try {
+          const res = await fetch(`/api/check-user?email=${user.emailAddresses[0]?.emailAddress}`);
+          const data = await res.json();
+          if (data.exists) {
+            // Re-calculate the layout redirection logic
+            const today = new Date();
+            const realdate = today.toISOString().split('T')[0];
+            if (data.user.dob === realdate) {
+              router.push("/birthday_layout-1");
+            } else {
+              router.push("/normal_layout-3");
+            }
+          }
+        } catch (err) {
+          console.error("Redirection check failed:", err);
+        }
+      };
+      checkUserPersistence();
     }
-  }, [user]);
+  }, [user, router]);
 
   if (!isLoaded) {
     return <div className="flex justify-center items-center min-h-screen bg-slate-950 text-white">Loading...</div>;

@@ -27,4 +27,4 @@ const Video = ({ url }) => {
   )
 }
 
-export default Video
+export default Video 

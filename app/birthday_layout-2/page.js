@@ -20,11 +20,29 @@ const BirthdayPage2 = () => {
       if (isLoaded && user) {
         try {
           const email = user.emailAddresses[0]?.emailAddress;
-          const res = await fetch(`/api/check-user?email=${email}`);
-          const data = await res.json();
-          if (data.success && data.exists) {
-            setUserData(data.user);
+          
+          // Fetch from both sources
+          const [userRes, specialRes] = await Promise.all([
+            fetch(`/api/check-user?email=${email}`),
+            fetch(`/api/special-users`)
+          ]);
+
+          const userData = await userRes.json();
+          const specialData = await specialRes.json();
+
+          let finalData = {};
+          if (userData.success && userData.exists) {
+            finalData = { ...userData.user };
           }
+
+          if (specialData.success && specialData.users) {
+            const specialEntry = specialData.users.find(u => u.email === email);
+            if (specialEntry) {
+              finalData = { ...finalData, ...specialEntry };
+            }
+          }
+
+          setUserData(finalData);
         } catch (error) {
           console.error("Error fetching user data:", error);
         } finally {

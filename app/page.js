@@ -52,31 +52,33 @@ export default function Home() {
   }, [user, router]);
 
   if (!isLoaded) {
-    return <div className="flex justify-center items-center min-h-screen bg-slate-950 text-white">Loading...</div>;
+    return <div className="flex justify-center items-center min-h-screen text-slate-600 font-bold">Loading...</div>;
   }
 
   if (!user) {
     return (
-      <div className="flex flex-col justify-center items-center min-h-screen bg-slate-950 text-white p-4">
-        <h1 className="text-4xl font-bold mb-8 bg-gradient-to-r from-purple-400 to-pink-600 bg-clip-text text-transparent">
-          Welcome to Wishing
-        </h1>
-        <p className="text-slate-400 mb-8 text-center max-w-md">
-          Join us to celebrate your special moments and share them with your loved ones.
-        </p>
-        <div className="flex gap-4">
-          <SignedOut>
-            <SignInButton mode="modal">
-              <button className="bg-purple-600 hover:bg-purple-700 text-white px-8 py-3 rounded-full font-semibold transition-all hover:scale-105">
-                Sign In
-              </button>
-            </SignInButton>
-            <SignUpButton mode="modal">
-              <button className="bg-transparent border border-purple-600 text-purple-400 hover:bg-purple-600/10 px-8 py-3 rounded-full font-semibold transition-all hover:scale-105">
-                Sign Up
-              </button>
-            </SignUpButton>
-          </SignedOut>
+      <div className="flex flex-col justify-center items-center min-h-screen p-4">
+        <div className="glass-card p-12 text-center max-w-xl">
+          <h1 className="text-5xl font-black mb-8 bg-gradient-to-r from-rose-500 to-pink-600 bg-clip-text text-transparent glow-text">
+            Welcome to Wishing
+          </h1>
+          <p className="text-slate-600 mb-10 text-lg font-medium leading-relaxed">
+            Join us to celebrate your special moments and share them with your loved ones in a magical, anti-gravity experience.
+          </p>
+          <div className="flex gap-6 justify-center">
+            <SignedOut>
+              <SignInButton mode="modal">
+                <button className="bg-rose-500 hover:bg-rose-600 text-white px-10 py-4 rounded-full font-bold shadow-lg shadow-rose-200/50 transition-all hover:scale-105 active:scale-95">
+                  Sign In
+                </button>
+              </SignInButton>
+              <SignUpButton mode="modal">
+                <button className="bg-white border-2 border-rose-500 text-rose-500 hover:bg-rose-50 px-10 py-4 rounded-full font-bold transition-all hover:scale-105 active:scale-95">
+                  Sign Up
+                </button>
+              </SignUpButton>
+            </SignedOut>
+          </div>
         </div>
       </div>
     );
@@ -90,8 +92,6 @@ export default function Home() {
     if (dobDate === realdate) {
       router.push("/birthday_layout-1");
     } else {
-      // For now, redirect to normal_layout-3 if not birthday
-      // Layout-2 is for friend's birthday which would need search logic
       router.push("/normal_layout-3");
     }
   };
@@ -135,98 +135,101 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white p-4 sm:p-8 flex flex-col items-center">
-      <div className="w-full max-w-2xl bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 sm:p-10 shadow-2xl">
-        <div className="flex justify-between items-center mb-8">
-          <h2 className="text-2xl font-bold text-purple-400">Profile Details</h2>
+    <div className="min-h-screen p-4 sm:p-12 flex flex-col items-center justify-center">
+      <div className="w-full max-w-2xl glass-card p-10 md:p-16 shadow-2xl relative overflow-hidden">
+        {/* Decorative highlight */}
+        <div className="absolute top-0 right-0 w-32 h-32 bg-rose-200/20 rounded-full -mr-10 -mt-10 blur-3xl animate-pulse" />
+        
+        <div className="flex justify-between items-center mb-12 relative z-10">
+          <h2 className="text-3xl font-black text-rose-600 tracking-tight glow-text">Profile Details</h2>
           <UserButton afterSignOutUrl="/" />
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-slate-400">First Name</label>
+        <form onSubmit={handleSubmit} className="space-y-8 relative z-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+            <div className="space-y-3">
+              <label className="text-sm font-bold text-slate-500 uppercase tracking-widest pl-1">First Name</label>
               <input 
                 type="text" 
-                className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all"
+                className="w-full bg-white/40 border border-white/60 rounded-xl px-5 py-3 focus:outline-none focus:ring-2 focus:ring-rose-400 transition-all text-slate-800 placeholder-slate-400 shadow-sm"
                 value={firstName} onChange={(e) => setFirstName(e.target.value)} required 
               />
             </div>
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-slate-400">Last Name</label>
+            <div className="space-y-3">
+              <label className="text-sm font-bold text-slate-500 uppercase tracking-widest pl-1">Last Name</label>
               <input 
                 type="text" 
-                className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all"
+                className="w-full bg-white/40 border border-white/60 rounded-xl px-5 py-3 focus:outline-none focus:ring-2 focus:ring-rose-400 transition-all text-slate-800 placeholder-slate-400 shadow-sm"
                 value={lastName} onChange={(e) => setLastName(e.target.value)} required 
               />
             </div>
           </div>
 
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-slate-400">Email</label>
+          <div className="space-y-3">
+            <label className="text-sm font-bold text-slate-500 uppercase tracking-widest pl-1">Email</label>
             <input 
               type="email" 
-              className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all disabled:opacity-50"
+              className="w-full bg-white/20 border border-white/40 rounded-xl px-5 py-3 focus:outline-none text-slate-500 disabled:opacity-50 cursor-not-allowed"
               value={email} disabled 
             />
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-slate-400">Username</label>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+            <div className="space-y-3">
+              <label className="text-sm font-bold text-slate-500 uppercase tracking-widest pl-1">Username</label>
               <input 
                 type="text" 
-                className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all"
+                className="w-full bg-white/40 border border-white/60 rounded-xl px-5 py-3 focus:outline-none focus:ring-2 focus:ring-rose-400 transition-all text-slate-800 placeholder-slate-400 shadow-sm"
                 value={username} onChange={(e) => setUsername(e.target.value)} required 
               />
             </div>
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-slate-400">Date of Birth</label>
+            <div className="space-y-3">
+              <label className="text-sm font-bold text-slate-500 uppercase tracking-widest pl-1">Date of Birth</label>
               <input 
                 type="date" 
-                className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all"
+                className="w-full bg-white/40 border border-white/60 rounded-xl px-5 py-3 focus:outline-none focus:ring-2 focus:ring-rose-400 transition-all text-slate-800 placeholder-slate-400 shadow-sm"
                 value={dobDate} onChange={(e) => setDobDate(e.target.value)} required 
               />
             </div>
           </div>
 
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-slate-400">Profile Picture URL</label>
+          <div className="space-y-3">
+            <label className="text-sm font-bold text-slate-500 uppercase tracking-widest pl-1">Profile Picture URL</label>
             <input 
               type="text" 
-              className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all"
+              className="w-full bg-white/40 border border-white/60 rounded-xl px-5 py-3 focus:outline-none focus:ring-2 focus:ring-rose-400 transition-all text-slate-800 placeholder-slate-400 shadow-sm"
               value={profilePicture} onChange={(e) => setProfilePicture(e.target.value)} 
             />
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-slate-400">Gender</label>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+            <div className="space-y-3">
+              <label className="text-sm font-bold text-slate-500 uppercase tracking-widest pl-1">Gender</label>
               <select 
-                className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all"
+                className="w-full bg-white/40 border border-white/60 rounded-xl px-5 py-3 focus:outline-none focus:ring-2 focus:ring-rose-400 transition-all text-slate-800 shadow-sm"
                 value={gender} onChange={(e) => setGender(e.target.value)} required
               >
-                <option value="" disabled className="bg-slate-900">Select Gender</option>
-                <option value="Male" className="bg-slate-900">Male</option>
-                <option value="Female" className="bg-slate-900">Female</option>
-                <option value="Other" className="bg-slate-900">Other</option>
+                <option value="" disabled>Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
               </select>
             </div>
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-slate-400">3D Avatar Link</label>
+            <div className="space-y-3">
+              <label className="text-sm font-bold text-slate-500 uppercase tracking-widest pl-1">3D Avatar Link</label>
               <input 
                 type="text" 
-                className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all"
+                className="w-full bg-white/40 border border-white/60 rounded-xl px-5 py-3 focus:outline-none focus:ring-2 focus:ring-rose-400 transition-all text-slate-800 placeholder-slate-400 shadow-sm"
                 value={avatar3dUrl} onChange={(e) => setAvatar3dUrl(e.target.value)} 
               />
             </div>
           </div>
 
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-slate-400">Specific Video URL</label>
+          <div className="space-y-3">
+            <label className="text-sm font-bold text-slate-500 uppercase tracking-widest pl-1">Video URL (Optional)</label>
             <input 
               type="text" 
-              className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all"
+              className="w-full bg-white/40 border border-white/60 rounded-xl px-5 py-3 focus:outline-none focus:ring-2 focus:ring-rose-400 transition-all text-slate-800 placeholder-slate-400 shadow-sm"
               value={videoUrl} onChange={(e) => setVideoUrl(e.target.value)} 
             />
           </div>
@@ -234,12 +237,13 @@ export default function Home() {
           <button 
             type="submit"
             disabled={loading}
-            className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold py-3 rounded-xl shadow-lg shadow-purple-500/20 transition-all active:scale-95 disabled:opacity-50"
+            className="w-full bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white font-black py-4 rounded-xl shadow-xl shadow-rose-200/50 transition-all active:scale-95 disabled:opacity-50 text-lg uppercase tracking-widest"
           >
-            {loading ? "Saving..." : "Celebrate My Birthday"}
+            {loading ? "Creating Magic..." : "Celebrate My Birthday"}
           </button>
         </form>
       </div>
     </div>
   );
 }
+

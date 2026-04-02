@@ -19,11 +19,11 @@ const BirthdayPage = () => {
       <BirthdayNav />
       <main>
         <Hero name={name} />
-        <Memories />
+        {/* <Memories /> */}
         <MessageSection message={`To ${name}, may your day be filled with magic and your year with infinite joy!`} />
         {/* We can also keep DisplayMessage if there are communal wishes */}
         <DisplayMessage />
-        <Gallery />
+        {/* <Gallery /> */}
         <Surprise />
       </main>
       <Footer />

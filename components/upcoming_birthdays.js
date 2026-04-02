@@ -1,51 +1,52 @@
-import React from 'react'
-import Link from 'next/link'
+import React from 'react';
+import Link from 'next/link';
 
 const UpcomingBirthdays = ({ users }) => {
   return (
-    <div className="p-8 rounded-[2rem] bg-white/5 border border-white/10 backdrop-blur-xl h-full flex flex-col">
-      <div className="flex items-center gap-3 mb-8">
-        <div className="w-10 h-10 rounded-xl bg-purple-500/20 flex items-center justify-center text-xl">
+    <div className="glass-card p-10 h-full flex flex-col shadow-xl">
+      <div className="flex items-center gap-4 mb-10">
+        <div className="w-12 h-12 rounded-2xl bg-rose-100 flex items-center justify-center text-2xl shadow-inner border border-white/50">
           📅
         </div>
-        <h3 className="text-xl font-black text-white">Upcoming Birthdays</h3>
+        <h3 className="text-2xl font-black text-rose-900 tracking-tight">Upcoming</h3>
       </div>
 
-      <div className="space-y-4 flex-1">
+      <div className="space-y-6 flex-1">
         {users.length > 0 ? (
           users.map((u, i) => (
-            <div key={i} className="flex items-center justify-between p-4 rounded-2xl bg-white/5 hover:bg-white/10 transition-all group">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-slate-700 to-slate-800 flex items-center justify-center font-bold text-white text-sm border border-white/5 group-hover:from-purple-500 group-hover:to-pink-500 transition-all">
+            <div key={i} className="flex items-center justify-between p-5 rounded-2xl bg-white/30 hover:bg-white/50 transition-all group border border-white/20 shadow-sm">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-rose-200 to-pink-200 flex items-center justify-center font-black text-rose-700 text-sm border-2 border-white group-hover:from-rose-400 group-hover:to-pink-400 group-hover:text-white transition-all shadow-md">
                   {u.firstname?.[0] || "U"}
                 </div>
                 <div>
-                  <p className="text-sm font-bold text-white group-hover:text-purple-400 transition-colors">
+                  <p className="text-base font-black text-rose-900 group-hover:text-rose-600 transition-colors tracking-tight">
                     {u.firstname} {u.lastname}
                   </p>
-                  <p className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">{u.dob}</p>
+                  <p className="text-[10px] text-slate-500 font-black uppercase tracking-[0.2em]">{u.dob}</p>
                 </div>
               </div>
-              <div className="text-[10px] font-black px-3 py-1 rounded-full bg-white/5 text-slate-400 group-hover:text-white transition-colors uppercase">
+              <div className="text-[10px] font-black px-4 py-1.5 rounded-full bg-white/60 text-rose-400 group-hover:bg-rose-500 group-hover:text-white transition-all uppercase tracking-widest shadow-sm">
                 Soon
               </div>
             </div>
           ))
         ) : (
-          <div className="text-center py-8">
-            <p className="text-slate-500 text-sm">No upcoming birthdays found.</p>
+          <div className="text-center py-12 bg-white/10 rounded-2xl border border-dashed border-rose-200">
+            <p className="text-slate-500 font-medium">No celebrations soon.</p>
           </div>
         )}
       </div>
 
       <Link 
         href="/" 
-        className="mt-8 text-center text-xs font-black text-purple-400 hover:text-purple-300 transition-colors uppercase tracking-widest block"
+        className="mt-10 py-4 text-center text-xs font-black text-rose-500 hover:text-rose-700 transition-all uppercase tracking-[0.3em] block glass-card bg-white/30 hover:bg-white/50 border-white/40 shadow-sm"
       >
         View All Friends →
       </Link>
     </div>
-  )
-}
+  );
+};
 
-export default UpcomingBirthdays
+export default UpcomingBirthdays;
+

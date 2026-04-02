@@ -4,6 +4,17 @@
 
 @custom-variant dark (&:is(.dark *));
 
+:root {
+  --background: #fffafa;
+  --foreground: #1a202c;
+  --primary-gradient: linear-gradient(135deg, #fff5f5 0%, #fff0f0 100%);
+  --secondary-gradient: linear-gradient(to top, #a18cd1 0%, #fbc2eb 100%);
+  --accent-gradient: linear-gradient(120deg, #ffecd2 0%, #fcb69f 100%);
+  --radius: 20px;
+  --border: rgba(255, 255, 255, 0.3);
+  --ring: #ff9a9e;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -47,20 +58,11 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-:root {
-  --background: #fff5f5;
-  --foreground: #4a5568;
-  --primary-gradient: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
-  --secondary-gradient: linear-gradient(to top, #a18cd1 0%, #fbc2eb 100%);
-  --accent-gradient: linear-gradient(120deg, #ffecd2 0%, #fcb69f 100%);
-  --radius: 20px;
-}
 
 body {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   color: var(--foreground);
-  background: var(--primary-gradient);
-  background-attachment: fixed;
+  background: transparent; /* Background is handled by AnimatedBackground */
   min-height: 100vh;
   margin: 0;
   overflow-x: hidden;

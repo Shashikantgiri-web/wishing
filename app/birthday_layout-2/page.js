@@ -79,32 +79,36 @@ const BirthdayPage2 = () => {
         <div className="max-w-7xl mx-auto px-6 py-12 space-y-24">
           
           {/* Special 3D Avatar Section */}
-          <section className="space-y-8 text-center scroll-mt-24" id="avatar-3d">
-            <div className="inline-block px-6 py-2 bg-rose-50 rounded-full text-rose-500 font-black tracking-widest uppercase text-xs mb-4">
-              Premium 3D Experience
-            </div>
-            <h2 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tight glow-text px-4">
-              Your Birthday Avatar
-            </h2>
-            <Avatar3D src={userData?.avatar_3d_url || userData?.avatar3dUrl} />
-            <p className="max-w-2xl mx-auto text-slate-500 font-medium text-lg leading-relaxed">
-              Explore your personalized 3D twin, crafted specifically for this milestone birthday!
-            </p>
-          </section>
+          {userData?.avatar3D && (
+            <section className="space-y-8 text-center scroll-mt-24" id="avatar-3d">
+              <div className="inline-block px-6 py-2 bg-rose-50 rounded-full text-rose-500 font-black tracking-widest uppercase text-xs mb-4">
+                Premium 3D Experience
+              </div>
+              <h2 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tight glow-text px-4">
+                Your Birthday Avatar
+              </h2>
+              <Avatar3D src={userData.avatar3D} />
+              <p className="max-w-2xl mx-auto text-slate-500 font-medium text-lg leading-relaxed">
+                Explore your personalized 3D twin, crafted specifically for this milestone birthday!
+              </p>
+            </section>
+          )}
 
           {/* Special Video Message Section */}
-          <section className="space-y-8 text-center scroll-mt-24" id="video-message">
-            <div className="inline-block px-6 py-2 bg-purple-50 rounded-full text-purple-500 font-black tracking-widest uppercase text-xs mb-4">
-              Magical Moments
-            </div>
-            <h2 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tight glow-text px-4">
-              Birthday Cinematic
-            </h2>
-            <Video url={userData?.video_url || userData?.animationVideo} />
-            <p className="max-w-2xl mx-auto text-slate-500 font-medium text-lg leading-relaxed">
-              A special cinematic experience curated just for you. Sit back and enjoy the magic!
-            </p>
-          </section>
+          {userData?.animationVideo && (
+            <section className="space-y-8 text-center scroll-mt-24" id="video-message">
+              <div className="inline-block px-6 py-2 bg-purple-50 rounded-full text-purple-500 font-black tracking-widest uppercase text-xs mb-4">
+                Magical Moments
+              </div>
+              <h2 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tight glow-text px-4">
+                Birthday Cinematic
+              </h2>
+              <Video url={userData.animationVideo} />
+              <p className="max-w-2xl mx-auto text-slate-500 font-medium text-lg leading-relaxed">
+                A special cinematic experience curated just for you. Sit back and enjoy the magic!
+              </p>
+            </section>
+          )}
 
           <MessageSection message={`To ${name}, wishing you a day that's as beautiful and unique as you are!`} />
           

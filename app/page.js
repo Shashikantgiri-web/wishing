@@ -15,8 +15,6 @@ export default function Home() {
   const [dobDate, setDobDate] = useState("");
   const [gender, setGender] = useState("");
   const [profilePicture, setProfilePicture] = useState("");
-  const [videoUrl, setVideoUrl] = useState("");
-  const [avatar3dUrl, setAvatar3dUrl] = useState("");
   const [loading, setLoading] = useState(false);
 
   // Populate state from user object when available

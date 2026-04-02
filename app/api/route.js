@@ -29,8 +29,6 @@ export async function POST(request) {
       dob: body.dob,
       gender: body.gender,
       profil_picture: body.profil_picture,
-      video_url: body.video_url,
-      avatar_3d_url: body.avatar_3d_url,
       for_message: body.for_message || "Birthday",
       to_message: body.to_message || "Friend",
       createdAt: new Date()

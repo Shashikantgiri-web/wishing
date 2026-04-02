@@ -2,15 +2,15 @@ import React from 'react'
 
 const Footer = () => {
   return (
-    <footer className="w-full py-12 border-t border-white/5 ">
-      <div className="max-w-7xl mx-auto px-6 flex flex-col items-center gap-4">
-        <p className="text-slate-500 text-sm">
-          © {new Date().getFullYear()} Wishing. Created with ❤️ for your special moments.
+    <footer className="w-full py-16 border-t border-rose-100/20 relative z-10">
+      <div className="max-w-7xl mx-auto px-6 flex flex-col items-center gap-6">
+        <p className="text-slate-500 text-sm font-medium">
+          © {new Date().getFullYear()} <span className="font-black text-rose-500">Wishing</span>. Created with ❤️ for your special moments.
         </p>
-        <div className="flex gap-6 text-slate-400 text-xs uppercase tracking-widest font-semibold">
-          <a href="#" className="hover:text-purple-400 transition-colors">Privacy</a>
-          <a href="#" className="hover:text-purple-400 transition-colors">Terms</a>
-          <a href="#" className="hover:text-purple-400 transition-colors">Socials</a>
+        <div className="flex gap-8 text-rose-400 text-[10px] uppercase tracking-[0.2em] font-black">
+          <a href="#" className="hover:text-rose-600 transition-all hover:scale-110">Privacy</a>
+          <a href="#" className="hover:text-rose-600 transition-all hover:scale-110">Terms</a>
+          <a href="#" className="hover:text-rose-600 transition-all hover:scale-110">Socials</a>
         </div>
       </div>
     </footer>

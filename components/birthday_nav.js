@@ -4,12 +4,12 @@ import Link from 'next/link'
 
 const BirthdayNav = () => {
   return (
-    <nav className="fixed top-0 w-full z-50 bg-slate-950/50 backdrop-blur-md border-b border-white/10 px-6 py-4 flex justify-between items-center">
-      <Link href="/" className="text-xl font-bold bg-gradient-to-r from-purple-400 to-pink-600 bg-clip-text text-transparent">
+    <nav className="fixed top-0 w-full z-50 bg-white/40 backdrop-blur-xl border-b border-white/60 px-6 py-4 flex justify-between items-center shadow-sm">
+      <Link href="/" className="text-2xl font-black bg-gradient-to-r from-rose-500 to-pink-600 bg-clip-text text-transparent glow-text tracking-tighter">
         Wishing
       </Link>
-      <div className="flex items-center gap-6 text-sm font-medium text-slate-300">
-        <Link href="/" className="hover:text-purple-400 transition-colors">Home</Link>
+      <div className="flex items-center gap-8 text-sm font-black text-slate-600 uppercase tracking-widest">
+        <Link href="/" className="hover:text-rose-500 transition-colors">Home</Link>
         <UserButton />
       </div>
     </nav>

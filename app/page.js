@@ -31,14 +31,26 @@ export default function Home() {
       // Auto Redirect Logic from README.md
       const checkUserPersistence = async () => {
         try {
-          const res = await fetch(`/api/check-user?email=${user.emailAddresses[0]?.emailAddress}`);
+          const email = user.emailAddresses[0]?.emailAddress;
+          const res = await fetch(`/api/check-user?email=${email}`);
           const data = await res.json();
+          
           if (data.exists) {
+            // Fetch special users list
+            const specialRes = await fetch('/api/special-users');
+            const specialData = await specialRes.json();
+            const isSpecial = specialData.users?.some(u => u.email === email);
+
             // Re-calculate the layout redirection logic
             const today = new Date();
             const realdate = today.toISOString().split('T')[0];
+            
             if (data.user.dob === realdate) {
-              router.push("/birthday_layout-1");
+              if (isSpecial) {
+                router.push("/birthday_layout-2");
+              } else {
+                router.push("/birthday_layout-1");
+              }
             } else {
               router.push("/normal_layout-3");
             }
@@ -84,13 +96,22 @@ export default function Home() {
     );
   }
 
-  const handleLayoutRedirect = () => {
+  const handleLayoutRedirect = async () => {
     const today = new Date();
     const realdate = today.toISOString().split('T')[0];
     
+    // Check for special users
+    const specialRes = await fetch('/api/special-users');
+    const specialData = await specialRes.json();
+    const isSpecial = specialData.users?.some(u => u.email === email);
+
     // Logic for redirection
     if (dobDate === realdate) {
-      router.push("/birthday_layout-1");
+      if (isSpecial) {
+        router.push("/birthday_layout-2");
+      } else {
+        router.push("/birthday_layout-1");
+      }
     } else {
       router.push("/normal_layout-3");
     }

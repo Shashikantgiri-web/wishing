@@ -1,5 +1,6 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import { ClerkProvider } from '@clerk/nextjs';
+import { HexagonBackgroundDemo } from "@/components/background";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -25,6 +26,7 @@ export default function RootLayout({ children }) {
     >
       <body className="min-h-full flex flex-col">
         <ClerkProvider>
+          <HexagonBackgroundDemo/>
           {children}
         </ClerkProvider>
       </body>

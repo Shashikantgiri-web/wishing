@@ -31,14 +31,14 @@ const Page = () => {
         <div className="min-h-screen bg-slate-950">
             <NormalNav />
             <main className="pt-20">
-                {/* My Wishes Section (The "Message Plate") */}
-                <section className="border-b border-white/5 bg-gradient-to-b from-slate-900 to-slate-950">
-                    <DisplayMessage />
-                </section>
-
                 {/* Explore Section */}
                 <section className="py-12">
                     <Explore />
+                </section>
+                
+                {/* My Wishes Section (The "Message Plate") */}
+                <section className="border-b border-white/5 bg-gradient-to-b from-slate-900 to-slate-950">
+                    <DisplayMessage />
                 </section>
             </main>
             <Footer />

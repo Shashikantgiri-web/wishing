@@ -12,7 +12,7 @@ const MessageSection = ({ message = "To the one who makes every day brighter, ha
           A Note from the Heart
         </h3>
         <blockquote className="text-2xl md:text-3xl text-slate-800 font-serif leading-relaxed italic antialiased drop-shadow-sm">
-          "{message}"
+          &quot;{message}&quot;
         </blockquote>
         <div className="pt-10 flex flex-col items-center space-y-4">
           <div className="h-px w-24 bg-gradient-to-r from-transparent via-rose-300 to-transparent" />

@@ -1,5 +1,6 @@
 'use client';
 import React, { useRef } from 'react';
+import Image from 'next/image';
 
 const Gallery = () => {
   const scrollRef = useRef(null);
@@ -34,10 +35,12 @@ const Gallery = () => {
             className="group flex-shrink-0 w-[80vw] md:w-[600px] aspect-[4/3] glass-card p-4 shadow-2xl snap-center hover:shadow-rose-100/50 transition-all duration-700"
           >
             <div className="w-full h-full relative overflow-hidden rounded-xl">
-              <img 
+              <Image 
                 src={src} 
                 alt={`Gallery ${i}`} 
-                className="w-full h-full object-cover transform transition-transform duration-1000 group-hover:scale-110" 
+                fill
+                className="object-cover transform transition-transform duration-1000 group-hover:scale-110"
+                unoptimized
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60" />
               <div className="absolute bottom-8 left-8 text-white p-4 glass-card border-white/40 shadow-lg">

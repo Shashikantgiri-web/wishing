@@ -1,6 +1,7 @@
 'use client';
 import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
+import Image from 'next/image';
 
 const Memories = () => {
   const containerRef = useRef(null);
@@ -44,11 +45,13 @@ const Memories = () => {
             >
               <div className="glass-card p-4 shadow-2xl transition-all duration-500 group-hover:scale-[1.03] group-hover:-rotate-1 hover:shadow-rose-200/50">
                 <div className="relative overflow-hidden rounded-xl">
-                  <img 
+                  <Image 
                     src={src} 
                     alt={`Memory ${i}`} 
+                    width={400}
+                    height={500}
                     className="w-full h-auto object-cover transform transition-transform duration-700 group-hover:scale-110"
-                    loading="lazy"
+                    unoptimized
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-rose-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                 </div>

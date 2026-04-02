@@ -215,25 +215,7 @@ export default function Home() {
                 <option value="Other">Other</option>
               </select>
             </div>
-            <div className="space-y-3">
-              <label className="text-sm font-bold text-slate-500 uppercase tracking-widest pl-1">3D Avatar Link</label>
-              <input 
-                type="text" 
-                className="w-full bg-white/40 border border-white/60 rounded-xl px-5 py-3 focus:outline-none focus:ring-2 focus:ring-rose-400 transition-all text-slate-800 placeholder-slate-400 shadow-sm"
-                value={avatar3dUrl} onChange={(e) => setAvatar3dUrl(e.target.value)} 
-              />
-            </div>
           </div>
-
-          <div className="space-y-3">
-            <label className="text-sm font-bold text-slate-500 uppercase tracking-widest pl-1">Video URL (Optional)</label>
-            <input 
-              type="text" 
-              className="w-full bg-white/40 border border-white/60 rounded-xl px-5 py-3 focus:outline-none focus:ring-2 focus:ring-rose-400 transition-all text-slate-800 placeholder-slate-400 shadow-sm"
-              value={videoUrl} onChange={(e) => setVideoUrl(e.target.value)} 
-            />
-          </div>
-
           <button 
             type="submit"
             disabled={loading}

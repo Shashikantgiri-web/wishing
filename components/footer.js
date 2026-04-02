@@ -2,7 +2,7 @@ import React from 'react'
 
 const Footer = () => {
   return (
-    <footer className="w-full py-12 border-t border-white/5 bg-slate-950">
+    <footer className="w-full py-12 border-t border-white/5 ">
       <div className="max-w-7xl mx-auto px-6 flex flex-col items-center gap-4">
         <p className="text-slate-500 text-sm">
           © {new Date().getFullYear()} Wishing. Created with ❤️ for your special moments.

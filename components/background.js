@@ -2,6 +2,12 @@ import { HexagonBackground } from '@/components/animate-ui/components/background
 
 export const HexagonBackgroundDemo = () => {
   return (
-    <HexagonBackground className="absolute inset-0 flex items-center justify-center rounded-xl" />
+    <div className="fixed inset-0 z-[-1] pointer-events-none">
+      <HexagonBackground 
+        className="size-full" 
+        hexagonSize={100}
+        hexagonMargin={2}
+      />
+    </div>
   );
-};
+};

@@ -41,9 +41,10 @@ export default function Home() {
 
             // Re-calculate the layout redirection logic
             const today = new Date();
-            const realdate = today.toISOString().split('T')[0];
+            const todayMMDD = today.toISOString().slice(5, 10);
+            const userDobMMDD = data.user.dob.slice(5, 10);
             
-            if (data.user.dob === realdate) {
+            if (userDobMMDD === todayMMDD) {
               if (isSpecial) {
                 router.push("/birthday_layout-2");
               } else {
@@ -96,7 +97,7 @@ export default function Home() {
 
   const handleLayoutRedirect = async () => {
     const today = new Date();
-    const realdate = today.toISOString().split('T')[0];
+    const realdate = today.toISOString().slice(5, 10); 
     
     // Check for special users
     const specialRes = await fetch('/api/special-users');
@@ -104,7 +105,8 @@ export default function Home() {
     const isSpecial = specialData.users?.some(u => u.email === email);
 
     // Logic for redirection
-    if (dobDate === realdate) {
+    const dobMMDD = dobDate.slice(5, 10);
+    if (dobMMDD === realdate) {
       if (isSpecial) {
         router.push("/birthday_layout-2");
       } else {

@@ -1,6 +1,7 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import { useUser } from '@clerk/nextjs';
+import { useRouter } from 'next/navigation';
 import BirthdayNav from '@/components/birthday_nav';
 import Hero from '@/components/Hero';
 import MessageSection from '@/components/MessageSection';
@@ -14,6 +15,8 @@ const BirthdayPage2 = () => {
   const { user, isLoaded } = useUser();
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [checking, setChecking] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -43,15 +46,34 @@ const BirthdayPage2 = () => {
           }
 
           setUserData(finalData);
+          
+          // Access Gating Logic
+          const today = new Date();
+          const todayMMDD = today.toISOString().slice(5, 10);
+          const dobMMDD = finalData.dob ? finalData.dob.slice(5, 10) : "";
+
+          if (dobMMDD !== todayMMDD) {
+            router.push("/normal_layout-3");
+          } else {
+            const isSpecial = specialData.users?.some(u => u.email === email);
+            if (!isSpecial) {
+              router.push("/birthday_layout-1");
+            } else {
+              setChecking(false);
+            }
+          }
         } catch (error) {
           console.error("Error fetching user data:", error);
+          setChecking(false);
         } finally {
           setLoading(false);
         }
+      } else if (isLoaded && !user) {
+        router.push("/");
       }
     };
     fetchUserData();
-  }, [isLoaded, user]);
+  }, [isLoaded, user, router]);
 
   if (!isLoaded || loading) {
     return (

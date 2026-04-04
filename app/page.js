@@ -127,8 +127,6 @@ export default function Home() {
       dob: dobDate,
       gender: gender,
       profil_picture: profilePicture,
-      video_url: videoUrl,
-      avatar_3d_url: avatar3dUrl,
       for_message: "Birthday",
       to_message: "Friend"
     };

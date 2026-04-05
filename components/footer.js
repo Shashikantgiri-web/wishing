@@ -34,7 +34,7 @@ const Footer = () => {
             The celebration continues... 🎈
           </h3>
           <p className="text-slate-600 font-medium text-lg leading-relaxed antialiased">
-            Every day with you is a reason to celebrate. We hope this little surprise brought a smile to your beautiful face. Here's to many more years of magic, laughter, and love!
+            Every day with you is a reason to celebrate. We hope this little surprise brought a smile to your beautiful face. Here&apos;s to many more years of magic, laughter, and love!
           </p>
         </div>
 

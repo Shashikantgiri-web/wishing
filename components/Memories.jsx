@@ -1,7 +1,10 @@
 'use client';
 import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Image from 'next/image';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const Memories = () => {
   const containerRef = useRef(null);
@@ -18,17 +21,45 @@ const Memories = () => {
 
   useEffect(() => {
     const cards = containerRef.current.querySelectorAll('.memory-card');
+    
+    // Polaroid Drop Animation
+    gsap.fromTo(cards, 
+      { 
+        opacity: 0, 
+        y: -100, 
+        rotation: (i) => i % 2 === 0 ? 15 : -15 
+      },
+      {
+        opacity: 1,
+        y: 0,
+        rotation: (i) => i % 2 === 0 ? 3 : -3,
+        duration: 1.2,
+        stagger: 0.3,
+        ease: "bounce.out",
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top 70%",
+        }
+      }
+    );
+
+    // Subtle floating idle animation
     cards.forEach((card, i) => {
       gsap.to(card, {
-        y: `${Math.random() * 40 - 20}`,
-        x: `${Math.random() * 20 - 10}`,
-        duration: Math.random() * 4 + 4,
+        y: "+=15",
+        x: "+=10",
+        rotation: i % 2 === 0 ? "+=2" : "-=2",
+        duration: Math.random() * 3 + 3,
         repeat: -1,
         yoyo: true,
         ease: 'sine.inOut',
-        delay: i * 0.2,
+        delay: i * 0.5,
       });
     });
+
+    return () => {
+      ScrollTrigger.getAll().forEach(t => t.kill());
+    };
   }, []);
 
   return (
@@ -43,8 +74,8 @@ const Memories = () => {
               key={i} 
               className="memory-card relative break-inside-avoid group cursor-pointer"
             >
-              <div className="glass-card p-4 shadow-2xl transition-all duration-500 group-hover:scale-[1.03] group-hover:-rotate-1 hover:shadow-rose-200/50">
-                <div className="relative overflow-hidden rounded-xl">
+              <div className="glass-card p-4 shadow-2xl transition-all duration-500 group-hover:scale-[1.03] group-hover:-rotate-1 hover:shadow-rose-200/50 bg-white">
+                <div className="relative overflow-hidden rounded-sm border-8 border-white shadow-inner">
                   <Image 
                     src={src} 
                     alt={`Memory ${i}`} 
@@ -55,7 +86,7 @@ const Memories = () => {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-rose-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                 </div>
-                <p className="mt-4 text-slate-600 font-medium text-center italic drop-shadow-sm">
+                <p className="mt-6 text-slate-500 font-handwriting text-xl text-center italic drop-shadow-sm pb-2">
                   {["Magic times", "Best laughs", "Unforgettable", "Perfect day", "Forever", "Heartbeat"][i]}
                 </p>
               </div>
@@ -68,3 +99,4 @@ const Memories = () => {
 };
 
 export default Memories;
+

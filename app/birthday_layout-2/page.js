@@ -1,7 +1,9 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useUser } from '@clerk/nextjs';
 import { useRouter } from 'next/navigation';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import BirthdayNav from '@/components/birthday_nav';
 import Hero from '@/components/Hero';
 import MessageSection from '@/components/MessageSection';
@@ -10,6 +12,10 @@ import Footer from '@/components/footer';
 import DisplayMessage from '@/components/display_message';
 import Video from '@/components/video';
 import Avatar3D from '@/components/avatar3d';
+import Memories from '@/components/Memories';
+import AnimatedBackground from '@/components/AnimatedBackground';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const BirthdayPage2 = () => {
   const { user, isLoaded } = useUser();
@@ -17,6 +23,7 @@ const BirthdayPage2 = () => {
   const [loading, setLoading] = useState(true);
   const [checking, setChecking] = useState(true);
   const router = useRouter();
+  const mainRef = useRef(null);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -75,6 +82,31 @@ const BirthdayPage2 = () => {
     fetchUserData();
   }, [isLoaded, user, router]);
 
+  useEffect(() => {
+    if (!loading && !checking) {
+      const sections = mainRef.current.querySelectorAll('section');
+      sections.forEach((section) => {
+        gsap.fromTo(section, 
+          { opacity: 0, y: 50 },
+          { 
+            opacity: 1, 
+            y: 0, 
+            duration: 1, 
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: section,
+              start: "top 85%",
+              toggleActions: "play none none none"
+            }
+          }
+        );
+      });
+    }
+    return () => {
+      ScrollTrigger.getAll().forEach(t => t.kill());
+    };
+  }, [loading, checking]);
+
   if (!isLoaded || loading) {
     return (
       <div className="flex justify-center items-center min-h-screen bg-rose-50/30">
@@ -86,31 +118,35 @@ const BirthdayPage2 = () => {
   const name = user ? user.firstName : 'Celebrant';
 
   return (
-    <div className="relative overflow-x-hidden min-h-screen bg-white">
+    <div className="relative overflow-x-hidden min-h-screen bg-transparent">
       {/* Premium Background Effects */}
+      <AnimatedBackground particleCount={50} />
+      
       <div className="fixed inset-0 pointer-events-none z-0">
-        <div className="absolute top-[-10%] right-[-10%] w-[50%] h-[50%] bg-rose-100/50 rounded-full blur-[120px] animate-pulse" />
-        <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-purple-100/30 rounded-full blur-[120px]" />
+        <div className="absolute top-[-10%] right-[-10%] w-[50%] h-[50%] bg-rose-100/30 rounded-full blur-[120px]" />
+        <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-purple-100/20 rounded-full blur-[120px]" />
       </div>
 
       <BirthdayNav />
       
-      <main className="relative z-10 pt-10">
+      <main ref={mainRef} className="relative z-10 pt-10">
         <Hero name={name} />
         
-        <div className="max-w-7xl mx-auto px-6 py-12 space-y-24">
+        <div className="max-w-7xl mx-auto px-6 py-12 space-y-32">
           
           {/* Special 3D Avatar Section */}
           {userData?.avatar3D && (
             <section className="space-y-8 text-center scroll-mt-24" id="avatar-3d">
-              <div className="inline-block px-6 py-2 bg-rose-50 rounded-full text-rose-500 font-black tracking-widest uppercase text-xs mb-4">
+              <div className="inline-block px-6 py-2 bg-rose-50 rounded-full text-rose-500 font-black tracking-widest uppercase text-xs mb-4 shadow-sm">
                 Premium 3D Experience
               </div>
-              <h2 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tight glow-text px-4">
+              <h2 className="text-4xl md:text-6xl font-black text-slate-900 tracking-tight glow-text px-4">
                 Your Birthday Avatar
               </h2>
-              <Avatar3D src={userData.avatar3D} />
-              <p className="max-w-2xl mx-auto text-slate-500 font-medium text-lg leading-relaxed">
+              <div className="glass-card p-4 md:p-8 rounded-[40px] shadow-2xl bg-white/40">
+                <Avatar3D src={userData.avatar3D} />
+              </div>
+              <p className="max-w-2xl mx-auto text-slate-500 font-medium text-lg leading-relaxed antialiased">
                 Explore your personalized 3D twin, crafted specifically for this milestone birthday!
               </p>
             </section>
@@ -119,14 +155,16 @@ const BirthdayPage2 = () => {
           {/* Special Video Message Section */}
           {userData?.animationVideo && (
             <section className="space-y-8 text-center scroll-mt-24" id="video-message">
-              <div className="inline-block px-6 py-2 bg-purple-50 rounded-full text-purple-500 font-black tracking-widest uppercase text-xs mb-4">
+              <div className="inline-block px-6 py-2 bg-purple-50 rounded-full text-purple-500 font-black tracking-widest uppercase text-xs mb-4 shadow-sm">
                 Magical Moments
               </div>
-              <h2 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tight glow-text px-4">
+              <h2 className="text-4xl md:text-6xl font-black text-slate-900 tracking-tight glow-text px-4">
                 Birthday Cinematic
               </h2>
-              <Video url={userData.animationVideo} />
-              <p className="max-w-2xl mx-auto text-slate-500 font-medium text-lg leading-relaxed">
+              <div className="glass-card p-2 md:p-4 rounded-[30px] shadow-2xl bg-white/40 overflow-hidden">
+                <Video url={userData.animationVideo} />
+              </div>
+              <p className="max-w-2xl mx-auto text-slate-500 font-medium text-lg leading-relaxed antialiased">
                 A special cinematic experience curated just for you. Sit back and enjoy the magic!
               </p>
             </section>
@@ -134,6 +172,9 @@ const BirthdayPage2 = () => {
 
           <MessageSection message={`To ${name}, wishing you a day that's as beautiful and unique as you are!`} />
           
+          {/* Polaroid Memories Section */}
+          <Memories />
+
           <DisplayMessage />
           
           <Surprise />
@@ -146,3 +187,4 @@ const BirthdayPage2 = () => {
 };
 
 export default BirthdayPage2;
+

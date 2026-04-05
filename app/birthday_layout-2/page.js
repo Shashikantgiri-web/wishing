@@ -13,7 +13,7 @@ import DisplayMessage from '@/components/display_message';
 import Video from '@/components/video';
 import Avatar3D from '@/components/avatar3d';
 import Memories from '@/components/Memories';
-import AnimatedBackground from '@/components/AnimatedBackground';
+import Memories from '@/components/Memories';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -120,11 +120,11 @@ const BirthdayPage2 = () => {
   return (
     <div className="relative overflow-x-hidden min-h-screen bg-transparent">
       {/* Premium Background Effects */}
-      <AnimatedBackground particleCount={50} />
+      {/* Premium Background Effects handled by Root Layout */}
       
       <div className="fixed inset-0 pointer-events-none z-0">
-        <div className="absolute top-[-10%] right-[-10%] w-[50%] h-[50%] bg-rose-100/30 rounded-full blur-[120px]" />
-        <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-purple-100/20 rounded-full blur-[120px]" />
+        <div className="absolute top-[-5%] right-[-5%] w-[40%] h-[40%] bg-rose-100/20 rounded-full blur-[64px]" />
+        <div className="absolute bottom-[-5%] left-[-5%] w-[40%] h-[40%] bg-purple-100/15 rounded-full blur-[64px]" />
       </div>
 
       <BirthdayNav />

@@ -26,7 +26,7 @@ export default function RootLayout({ children }) {
     >
       <body className="min-h-screen flex flex-col relative" style={{ width: '100%' }}>
         <ClerkProvider>
-          <AnimatedBackground particleCount={40} />
+          <AnimatedBackground particleCount={15} />
           <main className="relative z-10 flex-grow">
             {children}
           </main>

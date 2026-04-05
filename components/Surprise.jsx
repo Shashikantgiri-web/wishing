@@ -82,7 +82,7 @@ const Surprise = () => {
           ref={buttonRef}
           onClick={triggerSurprise}
           disabled={active}
-          className={`w-full group relative glass-card p-16 md:p-24 shadow-2xl transition-all border-rose-200/50 cursor-pointer ${active ? 'scale-90 opacity-50 gray-scale h-[120vh]' : 'hover:scale-105 active:scale-95'}`}
+          className={`w-full group relative glass-card p-16 md:p-24 shadow-2xl transition-all border-rose-200/50 cursor-pointer ${active ? 'scale-90 opacity-50 gray-scale max-h-[120vh]' : 'hover:scale-105 active:scale-95'}`}
         >
           <div className="relative z-10 flex flex-col items-center">
             <div className="text-8xl mb-8 transform group-hover:rotate-12 transition-transform duration-500 ease-out drop-shadow-xl">

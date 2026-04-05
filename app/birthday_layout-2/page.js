@@ -13,7 +13,6 @@ import DisplayMessage from '@/components/display_message';
 import Video from '@/components/video';
 import Avatar3D from '@/components/avatar3d';
 import Memories from '@/components/Memories';
-import Memories from '@/components/Memories';
 
 gsap.registerPlugin(ScrollTrigger);
 

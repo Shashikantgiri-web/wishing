@@ -74,7 +74,7 @@ const Surprise = () => {
   };
 
   return (
-    <section className="py-32 px-6 relative z-20 flex flex-col items-center justify-center overflow-visible min-h-[70vh] max-h-[125vh]">
+    <section className="py-32 px-6 relative z-20 flex flex-col items-center justify-start overflow-visible min-h-[70vh] max-h-[125vh]">
       <div className="relative w-full max-w-lg" ref={containerRef}>
         <div className="absolute inset-0 bg-rose-400/20 blur-[120px] rounded-full scale-150 animate-pulse" />
         
@@ -82,7 +82,7 @@ const Surprise = () => {
           ref={buttonRef}
           onClick={triggerSurprise}
           disabled={active}
-          className={`w-full group relative glass-card p-16 md:p-24 shadow-2xl transition-all border-rose-200/50 cursor-pointer ${active ? 'scale-90 opacity-50 gray-scale' : 'hover:scale-105 active:scale-95'}`}
+          className={`w-full group relative glass-card p-16 md:p-24 shadow-2xl transition-all border-rose-200/50 cursor-pointer ${active ? 'scale-90 opacity-50 gray-scale h-[120vh]' : 'hover:scale-105 active:scale-95'}`}
         >
           <div className="relative z-10 flex flex-col items-center">
             <div className="text-8xl mb-8 transform group-hover:rotate-12 transition-transform duration-500 ease-out drop-shadow-xl">

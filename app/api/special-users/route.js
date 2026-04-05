@@ -21,7 +21,7 @@ export async function GET() {
 export async function POST(request) {
   try {
     const body = await request.json()
-    const { email, name, dob, avatar3D, animationVideo } = body
+    const { email, name, dob, avatar3D, animationVideo, memories } = body
 
     if (!email) {
       return Response.json({ success: false, message: "Email is required for identifier" }, { status: 400 })
@@ -41,11 +41,13 @@ export async function POST(request) {
           dob, 
           avatar3D: avatar3D || "", 
           animationVideo: animationVideo || "",
+          memories: memories || [],
           updatedAt: new Date()
         } 
       },
       { upsert: true }
     )
+
 
     return Response.json({ 
       success: true, 

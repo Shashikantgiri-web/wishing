@@ -134,7 +134,7 @@ const BirthdayPage2 = () => {
         
         <div className="max-w-7xl mx-auto px-6 py-12 space-y-32">
           
-          {/* Special 3D Avatar Section */}
+          {/* Special 3D Avatar Section
           {userData?.avatar3D && (
             <section className="space-y-8 text-center scroll-mt-24" id="avatar-3d">
               <div className="inline-block px-6 py-2 bg-rose-50 rounded-full text-rose-500 font-black tracking-widest uppercase text-xs mb-4 shadow-sm">
@@ -150,7 +150,7 @@ const BirthdayPage2 = () => {
                 Explore your personalized 3D twin, crafted specifically for this milestone birthday!
               </p>
             </section>
-          )}
+          )} */}
 
           {/* Special Video Message Section */}
           {userData?.animationVideo && (
@@ -173,7 +173,7 @@ const BirthdayPage2 = () => {
           <MessageSection message={`To ${name}, wishing you a day that's as beautiful and unique as you are!`} />
           
           {/* Polaroid Memories Section */}
-          <Memories />
+          <Memories memories={userData?.memories || []} />
 
           <DisplayMessage />
           

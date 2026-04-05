@@ -74,7 +74,7 @@ const Surprise = () => {
   };
 
   return (
-    <section className="py-32 px-6 relative z-20 flex flex-col items-center justify-center overflow-visible min-h-[70vh]">
+    <section className="py-32 px-6 relative z-20 flex flex-col items-center justify-center overflow-visible min-h-[70vh] max-h-[125vh]">
       <div className="relative w-full max-w-lg" ref={containerRef}>
         <div className="absolute inset-0 bg-rose-400/20 blur-[120px] rounded-full scale-150 animate-pulse" />
         

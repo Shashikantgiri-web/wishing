@@ -12,6 +12,7 @@ import Footer from '@/components/footer';
 import DisplayMessage from '@/components/display_message';
 
 const BirthdayPage = () => {
+  console.log("Layout-1 Rendering");
   const { user, isLoaded } = useUser();
   const router = useRouter();
   const [checking, setChecking] = useState(true);

@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import { useUser } from '@clerk/nextjs'
 
-const DisplayMessage = () => {
+const DisplayMessage = React.memo(() => {
   const { user, isLoaded } = useUser()
   const [messages, setMessages] = useState([])
   const [loading, setLoading] = useState(true)
@@ -100,6 +100,6 @@ const DisplayMessage = () => {
       </div>
     </div>
   )
-}
+});
 
 export default DisplayMessage;

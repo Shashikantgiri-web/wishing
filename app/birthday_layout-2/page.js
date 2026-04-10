@@ -152,7 +152,7 @@ const BirthdayPage2 = () => {
           )} */}
 
           {/* Special Video Message Section */}
-          {userData?.animationVideo && (
+          {/* {userData?.animationVideo && (
             <section className="space-y-8 text-center scroll-mt-24" id="video-message">
               <div className="inline-block px-6 py-2 bg-purple-50 rounded-full text-purple-500 font-black tracking-widest uppercase text-xs mb-4 shadow-sm">
                 Magical Moments
@@ -167,7 +167,7 @@ const BirthdayPage2 = () => {
                 A special cinematic experience curated just for you. Sit back and enjoy the magic!
               </p>
             </section>
-          )}
+          )} */}
 
           <MessageSection message={`To ${name}, wishing you a day that's as beautiful and unique as you are!`} />
           

@@ -2,14 +2,18 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { gsap } from 'gsap';
 
-const Surprise = () => {
+const Surprise = React.memo(() => {
   const [active, setActive] = useState(false);
   const containerRef = useRef(null);
   const buttonRef = useRef(null);
   const contentRef = useRef(null);
+  const hasAnimated = useRef(false);
 
   const triggerSurprise = () => {
-    if (active) return;
+    if (hasAnimated.current) return;
+    hasAnimated.current = true;
+    
+    // Set active state for UI changes
     setActive(true);
 
     const emojis = ['❤️', '✨', '🎈', '🎉', '🎁', '🎂', '💖', '⭐', '🌈'];
@@ -39,14 +43,24 @@ const Surprise = () => {
       }
     );
 
-    // Explosive confetti
-    for (let i = 0; i < 80; i++) {
+    // Explosive confetti - optimized with Fragment or simply ensured it's single-trigger
+    const fragment = document.createDocumentFragment();
+    const createdElements = [];
+
+    for (let i = 0; i < 60; i++) {
       const element = document.createElement('div');
       element.innerText = emojis[Math.floor(Math.random() * emojis.length)];
-      element.className = 'absolute pointer-events-none text-4xl select-none z-50';
+      element.className = 'absolute pointer-events-none text-4xl select-none z-50 will-change-transform';
+      element.style.position = 'absolute';
+      element.style.willChange = 'transform, opacity';
       
-      containerRef.current.appendChild(element);
+      fragment.appendChild(element);
+      createdElements.push(element);
+    }
+    
+    containerRef.current.appendChild(fragment);
 
+    createdElements.forEach((element) => {
       // Random trajectory
       const angle = Math.random() * Math.PI * 2;
       const distance = Math.random() * 800 + 400;
@@ -70,7 +84,7 @@ const Surprise = () => {
           }
         }
       );
-    }
+    });
   };
 
   return (
@@ -82,6 +96,7 @@ const Surprise = () => {
           ref={buttonRef}
           onClick={triggerSurprise}
           disabled={active}
+          style={{ willChange: 'transform' }}
           className={`w-full group relative glass-card p-16 md:p-24 shadow-2xl transition-all border-rose-200/50 cursor-pointer ${active ? 'scale-90 opacity-50 gray-scale max-h-[120vh]' : 'hover:scale-105 active:scale-95'}`}
         >
           <div className="relative z-10 flex flex-col items-center">
@@ -104,6 +119,7 @@ const Surprise = () => {
         {/* Hidden Surprise Revealed */}
         <div 
           ref={contentRef}
+          style={{ willChange: 'transform, opacity' }}
           className={`absolute top-full left-0 right-0 mt-20 text-center space-y-6 ${active ? 'block' : 'hidden'}`}
         >
           <div className="glass-card p-10 bg-white/60 shadow-2xl rounded-[40px] border-rose-100/50">
@@ -119,7 +135,8 @@ const Surprise = () => {
       </div>
     </section>
   );
-};
+});
 
 export default Surprise;
+
 

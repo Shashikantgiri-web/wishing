@@ -5,7 +5,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const MessageSection = ({ message = "To the one who makes every day brighter, happy birthday! You're not just a year older, but a year better, stronger, and more amazing. Keep shining!" }) => {
+const MessageSection = React.memo(({ message = "To the one who makes every day brighter, happy birthday! You're not just a year older, but a year better, stronger, and more amazing. Keep shining!" }) => {
   const sectionRef = useRef(null);
   const textRef = useRef(null);
   const iconRef = useRef(null);
@@ -29,8 +29,8 @@ const MessageSection = ({ message = "To the one who makes every day brighter, ha
     );
 
     // Text animation (line by line effect using words/chunks)
-    const words = textRef.current.innerText.split(' ');
-    textRef.current.innerHTML = words.map(word => `<span class="inline-block opacity-0 translate-y-4">${word}&nbsp;</span>`).join('');
+    const words = message.split(' ');
+    textRef.current.innerHTML = words.map(word => `<span class="inline-block opacity-0 translate-y-4" style="will-change: transform, opacity;">${word}&nbsp;</span>`).join('');
     
     const spans = textRef.current.querySelectorAll('span');
     
@@ -54,7 +54,7 @@ const MessageSection = ({ message = "To the one who makes every day brighter, ha
   return (
     <section ref={sectionRef} className="py-24 px-6 md:px-20 relative z-10 flex flex-col items-center justify-center min-h-[70vh]">
       <div className="glass-card max-w-4xl w-full p-11 md:p-20 text-center space-y-10 shadow-2xl hover:shadow-rose-100/40 transition-shadow">
-        <div ref={iconRef} className="w-24 h-24 bg-rose-200/40 rounded-full flex items-center justify-center mx-auto mb-12 ring-8 ring-rose-100/20 shadow-lg">
+        <div ref={iconRef} style={{ willChange: 'transform, opacity' }} className="w-24 h-24 bg-rose-200/40 rounded-full flex items-center justify-center mx-auto mb-12 ring-8 ring-rose-100/20 shadow-lg">
           <span className="text-5xl">💌</span>
         </div>
         <h3 className="text-4xl md:text-5xl font-black text-rose-900 tracking-tighter glow-text">
@@ -75,7 +75,8 @@ const MessageSection = ({ message = "To the one who makes every day brighter, ha
       </div>
     </section>
   );
-};
+});
 
 export default MessageSection;
+
 

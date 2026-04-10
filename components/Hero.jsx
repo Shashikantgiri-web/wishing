@@ -3,7 +3,7 @@ import React from 'react';
 import { gsap } from 'gsap';
 import { useEffect, useRef } from 'react';
 
-const Hero = ({ name = "Celebrant" }) => {
+const Hero = React.memo(({ name = "Celebrant" }) => {
   const heroRef = useRef(null);
   const introRef = useRef(null);
   const titleRef = useRef(null);
@@ -44,6 +44,11 @@ const Hero = ({ name = "Celebrant" }) => {
       yoyo: true,
       ease: "sine.inOut"
     });
+
+    return () => {
+        tl.kill();
+        gsap.killTweensOf(titleRef.current);
+    };
   }, [name]);
 
   return (
@@ -51,6 +56,7 @@ const Hero = ({ name = "Celebrant" }) => {
       {/* Intro Text Backdrop */}
       <div 
         ref={introRef} 
+        style={{ willChange: 'transform, opacity' }}
         className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none"
       >
         <h2 className="text-4xl md:text-6xl font-black text-rose-500/80 tracking-tight glow-text">
@@ -58,7 +64,7 @@ const Hero = ({ name = "Celebrant" }) => {
         </h2>
       </div>
 
-      <div ref={titleRef} className="text-center space-y-6 relative z-10">
+      <div ref={titleRef} style={{ willChange: 'transform, opacity' }} className="text-center space-y-6 relative z-10">
         <h2 className="text-2xl md:text-3xl font-medium text-rose-500 tracking-[0.3em] uppercase glow-text">
           Happy Birthday 🎂
         </h2>
@@ -66,7 +72,7 @@ const Hero = ({ name = "Celebrant" }) => {
           {name}
         </h1>
         
-        <div ref={contentRef} className="space-y-10">
+        <div ref={contentRef} style={{ willChange: 'transform, opacity' }} className="space-y-10">
           <p className="max-w-lg mx-auto text-lg md:text-xl text-slate-700 font-light leading-relaxed">
             Today is a celebration of the magic you bring into our lives. May your day be as beautiful and unique as you are.
           </p>
@@ -78,6 +84,7 @@ const Hero = ({ name = "Celebrant" }) => {
                   nextSection.scrollIntoView({ behavior: 'smooth' });
                 }
               }}
+              style={{ willChange: 'transform' }}
               className="glass-card px-10 py-5 text-rose-500 font-bold tracking-widest uppercase hover:scale-105 transition-all shadow-xl hover:shadow-rose-300/50 cursor-pointer"
             >
               Start Your Journey ✨
@@ -87,7 +94,8 @@ const Hero = ({ name = "Celebrant" }) => {
       </div>
     </section>
   );
-};
+});
 
 export default Hero;
+
 

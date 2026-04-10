@@ -5,7 +5,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const MessageSection = React.memo(({ message = "To the one who makes every day brighter, happy birthday! You're not just a year older, but a year better, stronger, and more amazing. Keep shining!" }) => {
+const MessageSection = React.memo(function MessageSection({ message = "To the one who makes every day brighter, happy birthday! You're not just a year older, but a year better, stronger, and more amazing. Keep shining!" }) {
   const sectionRef = useRef(null);
   const textRef = useRef(null);
   const iconRef = useRef(null);

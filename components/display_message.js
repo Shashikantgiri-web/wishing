@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import { useUser } from '@clerk/nextjs'
 
-const DisplayMessage = React.memo(() => {
+const DisplayMessage = React.memo(function DisplayMessage() {
   const { user, isLoaded } = useUser()
   const [messages, setMessages] = useState([])
   const [loading, setLoading] = useState(true)

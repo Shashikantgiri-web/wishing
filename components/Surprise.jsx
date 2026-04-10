@@ -2,7 +2,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { gsap } from 'gsap';
 
-const Surprise = React.memo(() => {
+const Surprise = React.memo(function Surprise() {
   const [active, setActive] = useState(false);
   const containerRef = useRef(null);
   const buttonRef = useRef(null);

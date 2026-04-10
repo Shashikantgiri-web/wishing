@@ -3,7 +3,7 @@ import React from 'react';
 import { gsap } from 'gsap';
 import { useEffect, useRef } from 'react';
 
-const Hero = React.memo(({ name = "Celebrant" }) => {
+const Hero = React.memo(function Hero({ name = "Celebrant" }) {
   const heroRef = useRef(null);
   const introRef = useRef(null);
   const titleRef = useRef(null);
@@ -12,6 +12,7 @@ const Hero = React.memo(({ name = "Celebrant" }) => {
   useEffect(() => {
     const tl = gsap.timeline();
     
+    const titleElement = titleRef.current;
     // Stage 1: "Hey [Name]..."
     tl.fromTo(introRef.current, 
       { opacity: 0, y: 50 }, 
@@ -47,7 +48,9 @@ const Hero = React.memo(({ name = "Celebrant" }) => {
 
     return () => {
         tl.kill();
-        gsap.killTweensOf(titleRef.current);
+        if (titleElement) {
+          gsap.killTweensOf(titleElement);
+        }
     };
   }, [name]);
 
